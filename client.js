@@ -33,7 +33,7 @@ async function main() {
     console.log("=== 🚆 Recherche de trains ===\n");
     const departure = prompt('📍 Gare de départ : ');
     const destination = prompt('🎯 Gare d’arrivée : ');
-    const travelClass = prompt('💺 Classe (optionnel, ex: première) : ');
+    const travelClass = prompt('💺 Classe (firstClass / businessClass / standardClass) : ');
     const tickets = prompt('🎟️ Nombre de billets (optionnel, défaut=1) : ');
     const departureDate = prompt('📅 Date de départ (optionnel, ex: 2025-02-01) : ');
 
@@ -56,7 +56,7 @@ async function main() {
     console.log("\n=== 🚆 Trains disponibles ===");
     const trains = result.trains.train;
     trains.forEach(t => {
-      console.log(`🔹 Train ID: ${t.trainId} | Départ : ${t.departure} ➡️ Destination : ${t.destination}`);
+      console.log(`🔹 Train ID: ${t.trainId} | Départ : ${t.departure} ➡️  Destination : ${t.destination} 📅Date de départ ${t.departureTime} 📅 Date d'arrivée: ${t.arrivalTime}`);
     });
 
     // 5) Sélection du train à réserver

@@ -11,7 +11,7 @@ const port = 4000;
 const wsdlPath = path.join(__dirname, 'wsdl', 'trainBooking.wsdl');
 const wsdlXML = fs.readFileSync(wsdlPath, 'utf8');
 
-// A simple user database
+// user Database
 const validUsers = {
   "admin": "password123",
   "user1": "securepass",
@@ -31,11 +31,11 @@ function authenticate(headers) {
     console.log(`✅ Authentication successful for ${username}`);
     return true;
   } else {
+    console.log("⛔ Invalid Credentials");
     throw new Error("⛔ Invalid Credentials");
   }
 }
 
-//  SOAP service 
 const service = {
   TrainBookingService: {
     TrainBookingPort: {
@@ -112,7 +112,6 @@ const service = {
       // { trainId, travelClass, tickets }
       bookTrain: async function (args, callback, headers) {
         try {
-          // 1. Authenticate
           authenticate(headers);
         } catch (err) {
           return callback(err);
@@ -134,10 +133,32 @@ const service = {
             tickets: tickets ? parseInt(tickets, 10) : 1
           });
           const soapResponse = {
-            confirmation: `✅ Booking confirmed for train ${trainId} (user: ${userId})`
+            confirmation: `✅ Réservation confirmée pour le train ${trainId} [ ${userId} ]`
           };
-         
+          const newReservation = {
+            trainId: parseInt(trainId, 10),
+            userId,
+            travelClass: travelClass || 'standard',
+            tickets: tickets ? parseInt(tickets, 10) : 1,
+            // You might also want a timestamp
+            bookedAt: new Date().toISOString()
+          };
+          const reservationsFile = path.join(__dirname, 'data', 'reservations.json');
+          let reservations = [];
 
+
+          if (fs.existsSync(reservationsFile)) {
+            const fileData = fs.readFileSync(reservationsFile, 'utf8');
+            reservations = JSON.parse(fileData);
+          }
+
+
+          reservations.push(newReservation);
+
+          fs.writeFileSync(reservationsFile, JSON.stringify(reservations, null, 2));
+
+
+        
           return callback(null, soapResponse);
 
         } catch (error) {
