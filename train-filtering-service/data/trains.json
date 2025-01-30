@@ -6,8 +6,8 @@
         "departureTime": "2025-02-01T08:00:00Z",
         "arrivalTime": "2025-02-01T10:00:00Z",
         "availableSeats": {
-            "firstClass": 10,
-            "businessClass": 20,
+            "firstClass": 0,
+            "businessClass": 10,
             "standardClass": 98
         }
     },
@@ -21,6 +21,102 @@
             "firstClass": 5,
             "businessClass": 15,
             "standardClass": 80
+        }
+    },
+    {
+        "id": 3,
+        "departureStation": "Paris",
+        "arrivalStation": "Lyon",
+        "departureTime": "2025-02-02T06:00:00Z",
+        "arrivalTime": "2025-02-02T08:00:00Z",
+        "availableSeats": {
+            "firstClass": 6,
+            "businessClass": 15,
+            "standardClass": 95
+        }
+    },
+    {
+        "id": 4,
+        "departureStation": "Paris",
+        "arrivalStation": "Nice",
+        "departureTime": "2025-02-02T07:30:00Z",
+        "arrivalTime": "2025-02-02T12:30:00Z",
+        "availableSeats": {
+            "firstClass": 8,
+            "businessClass": 10,
+            "standardClass": 100
+        }
+    },
+    {
+        "id": 5,
+        "departureStation": "Paris",
+        "arrivalStation": "Lyon",
+        "departureTime": "2025-03-10T11:15:00Z",
+        "arrivalTime": "2025-03-10T13:15:00Z",
+        "availableSeats": {
+            "firstClass": 12,
+            "businessClass": 8,
+            "standardClass": 120
+        }
+    },
+    {
+        "id": 6,
+        "departureStation": "Paris",
+        "arrivalStation": "Marseille",
+        "departureTime": "2025-03-10T12:00:00Z",
+        "arrivalTime": "2025-03-10T14:00:00Z",
+        "availableSeats": {
+            "firstClass": 4,
+            "businessClass": 12,
+            "standardClass": 86
+        }
+    },
+    {
+        "id": 7,
+        "departureStation": "Berlin",
+        "arrivalStation": "Frankfurt",
+        "departureTime": "2025-03-11T10:00:00Z",
+        "arrivalTime": "2025-03-11T12:30:00Z",
+        "availableSeats": {
+            "firstClass": 10,
+            "businessClass": 10,
+            "standardClass": 110
+        }
+    },
+    {
+        "id": 8,
+        "departureStation": "Madrid",
+        "arrivalStation": "Barcelona",
+        "departureTime": "2025-04-01T08:00:00Z",
+        "arrivalTime": "2025-04-01T10:15:00Z",
+        "availableSeats": {
+            "firstClass": 5,
+            "businessClass": 10,
+            "standardClass": 150
+        }
+    },
+    {
+        "id": 9,
+        "departureStation": "London",
+        "arrivalStation": "Manchester",
+        "departureTime": "2025-04-05T07:45:00Z",
+        "arrivalTime": "2025-04-05T10:00:00Z",
+        "availableSeats": {
+            "firstClass": 6,
+            "businessClass": 12,
+            "standardClass": 100
+        }
+    },
+    {
+        "id": 10,
+        "departureStation": "London",
+        "arrivalStation": "Edinburgh",
+        "departureTime": "2025-04-06T09:00:00Z",
+        "arrivalTime": "2025-04-06T13:30:00Z",
+        "availableSeats": {
+            "firstClass": 10,
+            "businessClass": 10,
+            "standardClass": 90
         }
     }
 ]
