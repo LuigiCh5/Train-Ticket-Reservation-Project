@@ -56,13 +56,13 @@ async function main() {
     console.log("\n=== 🚆 Trains disponibles ===");
     const trains = result.trains.train;
     trains.forEach(t => {
-      console.log(`🔹 Train ID: ${t.trainId} | Départ : ${t.departure} ➡️  Destination : ${t.destination} 📅Date de départ ${t.departureTime} 📅 Date d'arrivée: ${t.arrivalTime}`);
+      console.log(`🔹 Train ID: ${t.trainId} | Départ : ${t.departure} ➡️ Destination : ${t.destination} 📅 Date de départ ${t.departureTime} 📅 Date d'arrivée: ${t.arrivalTime}`);
     });
 
     // 5) Sélection du train à réserver
     const trainId = prompt("\n✏️ Entrez l'ID du train à réserver : ");
     const userId = prompt('👤 Identifiant utilisateur (ex: votre nom) : ');
-    const bookClass = travelClass || 'standard';
+    const bookClass = travelClass || 'standardClass';
     const bookTickets = tickets || 1;
 
     // 6) Réservation du train
