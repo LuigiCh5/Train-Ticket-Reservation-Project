@@ -11,6 +11,7 @@
     <!-- ========== TYPES ========== -->
     <types>
         <xs:schema targetNamespace="http://example.com/trainbooking">
+
             <!-- ==================== Authentication Element ==================== -->
             <xs:element name="Authentication">
                 <xs:complexType>
@@ -27,6 +28,9 @@
                     <xs:sequence>
                         <xs:element name="departure" type="xs:string" minOccurs="1" maxOccurs="1"/>
                         <xs:element name="destination" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="travelClass" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="tickets" type="xs:int" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="departureDate" type="xs:string" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -59,6 +63,8 @@
                     <xs:sequence>
                         <xs:element name="trainId" type="xs:int"/>
                         <xs:element name="userId" type="xs:string"/>
+                        <xs:element name="travelClass" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="tickets" type="xs:int" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
