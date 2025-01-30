@@ -1,0 +1,17 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:tns="http://example.com/trainbooking">
+  
+  <soapenv:Header>
+    <Auth>
+      <username>admin</username>
+      <password>password123</password>
+    </Auth>
+  </soapenv:Header>
+
+  <soapenv:Body>
+    <tns:searchTrains>
+      <departure>London</departure>
+      <destination>Paris</destination>
+    </tns:searchTrains>
+  </soapenv:Body>
+</soapenv:Envelope>

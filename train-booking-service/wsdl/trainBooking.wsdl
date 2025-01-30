@@ -1,65 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <definitions name="TrainBookingService"
-  targetNamespace="http://example.com/trainbooking"
-  xmlns:tns="http://example.com/trainbooking"
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-  xmlns="http://schemas.xmlsoap.org/wsdl/">
+             targetNamespace="http://example.com/trainbooking"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://example.com/trainbooking"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
 
-  <message name="searchTrainsRequest">
-    <part name="departure" type="xsd:string"/>
-    <part name="destination" type="xsd:string"/>
-  </message>
+    <!-- ========== TYPES ========== -->
+    <types>
+        <xs:schema targetNamespace="http://example.com/trainbooking">
+            <!-- ==================== Authentication Element ==================== -->
+            <xs:element name="Authentication">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="username" type="xs:string"/>
+                        <xs:element name="password" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
 
-  <message name="searchTrainsResponse">
-    <part name="trains" type="xsd:string"/>
-  </message>
+            <!-- ==================== searchTrains Elements ==================== -->
+            <xs:element name="searchTrainsRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="departure" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="destination" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
 
-  <message name="bookTrainRequest">
-    <part name="trainId" type="xsd:int"/>
-    <part name="userId" type="xsd:string"/>
-  </message>
+            <xs:element name="searchTrainsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="trains">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="train" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="trainId" type="xs:int"/>
+                                                <xs:element name="departure" type="xs:string"/>
+                                                <xs:element name="destination" type="xs:string"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
 
-  <message name="bookTrainResponse">
-    <part name="confirmation" type="xsd:string"/>
-  </message>
+            <!-- ==================== bookTrain Elements ==================== -->
+            <xs:element name="bookTrainRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="trainId" type="xs:int"/>
+                        <xs:element name="userId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
 
-  <portType name="TrainBookingPortType">
-    <operation name="searchTrains">
-      <input message="tns:searchTrainsRequest"/>
-      <output message="tns:searchTrainsResponse"/>
-    </operation>
-    <operation name="bookTrain">
-      <input message="tns:bookTrainRequest"/>
-      <output message="tns:bookTrainResponse"/>
-    </operation>
-  </portType>
+            <xs:element name="bookTrainResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="confirmation" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </types>
 
-  <binding name="TrainBookingBinding" type="tns:TrainBookingPortType">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="searchTrains">
-      <soap:operation soapAction="http://example.com/trainbooking/searchTrains"/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="bookTrain">
-      <soap:operation soapAction="http://example.com/trainbooking/bookTrain"/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-  </binding>
+    <!-- ========== MESSAGES ========== -->
+    <!-- Each operation has an input message and output message -->
+    <message name="searchTrainsRequest">
+        <part name="parameters" element="tns:searchTrainsRequest"/>
+    </message>
+    <message name="searchTrainsResponse">
+        <part name="parameters" element="tns:searchTrainsResponse"/>
+    </message>
 
-  <service name="TrainBookingService">
-    <port name="TrainBookingPort" binding="tns:TrainBookingBinding">
-      <soap:address location="http://localhost:4000/booking"/>
-    </port>
-  </service>
+    <message name="bookTrainRequest">
+        <part name="parameters" element="tns:bookTrainRequest"/>
+    </message>
+    <message name="bookTrainResponse">
+        <part name="parameters" element="tns:bookTrainResponse"/>
+    </message>
+
+    <!-- Authentication header message -->
+    <message name="AuthenticationHeader">
+        <part name="Auth" element="tns:Authentication"/>
+    </message>
+
+    <!-- ========== PORT TYPE ========== -->
+    <portType name="TrainBookingPortType">
+        <operation name="searchTrains">
+            <input message="tns:searchTrainsRequest"/>
+            <output message="tns:searchTrainsResponse"/>
+        </operation>
+        <operation name="bookTrain">
+            <input message="tns:bookTrainRequest"/>
+            <output message="tns:bookTrainResponse"/>
+        </operation>
+    </portType>
+
+    <!-- ========== BINDING ========== -->
+    <binding name="TrainBookingBinding" type="tns:TrainBookingPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        
+        <operation name="searchTrains">
+            <soap:operation soapAction="http://example.com/trainbooking/searchTrains" style="document"/>
+            <input>
+                <!-- The body is literal and we also expect the Auth header -->
+                <soap:body use="literal"/>
+                <soap:header message="tns:AuthenticationHeader" part="Auth" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="bookTrain">
+            <soap:operation soapAction="http://example.com/trainbooking/bookTrain" style="document"/>
+            <input>
+                <!-- The body is literal and we also expect the Auth header -->
+                <soap:body use="literal"/>
+                <soap:header message="tns:AuthenticationHeader" part="Auth" use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- ========== SERVICE ========== -->
+    <service name="TrainBookingService">
+        <documentation>Train Booking SOAP Service</documentation>
+        <port name="TrainBookingPort" binding="tns:TrainBookingBinding">
+            <soap:address location="http://localhost:4000/booking"/>
+        </port>
+    </service>
 
 </definitions>

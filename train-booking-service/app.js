@@ -2,86 +2,100 @@ const express = require('express');
 const soap = require('soap');
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
 
 const app = express();
 const port = 4000;
 
-// Read the WSDL file
+// Read the WSDL from the local file system
 const wsdlPath = path.join(__dirname, 'wsdl', 'trainBooking.wsdl');
 const wsdlXML = fs.readFileSync(wsdlPath, 'utf8');
 
-// Hardcoded credentials (For demo, replace with database validation)
-const validUsers = {
-  "admin": "password123",
-  "user1": "securepass"
+// A simple user database
+const validUsers = { 
+  "admin": "password123", 
+  "user1": "securepass" 
 };
 
-// Middleware for SOAP authentication
 function authenticate(headers) {
-    if (!headers || !headers.Auth || !headers.Auth.username || !headers.Auth.password) {
-        throw new Error("Authentication required");
-    }
-    
-    const { username, password } = headers.Auth;
-    
-    if (validUsers[username] && validUsers[username] === password) {
-        console.log(`✅ Authentication successful for ${username}`);
-        return true;
-    } else {
-        console.error("❌ Authentication failed");
-        throw new Error("Invalid credentials");
-    }
+  console.log("🔍 Authentication Headers:", headers);
+
+  if (!headers || !headers.Authentication || !headers.Authentication.username || !headers.Authentication.password) {
+      console.log("⚠️ Authentication Required");
+      throw new Error("⚠️ Authentication Required");
+  }
+  const { username, password } = headers.Authentication;
+  if (validUsers[username] === password) {
+      console.log(`✅ Authentication successful for ${username}`);
+      return true;
+  } else {
+      throw new Error("⛔ Invalid Credentials");
+  }
 }
 
-// Implement SOAP service methods
+// Our service definition
 const service = {
   TrainBookingService: {
     TrainBookingPort: {
-      searchTrains: async function (args, headers) {
-        authenticate(headers);  // Check authentication
-
-        console.log("Searching trains for:", args.departure, "to", args.destination);
-        
+      searchTrains: function (args, callback, headers /* or soapHeader */) {
         try {
-          const response = await axios.get('http://localhost:5000/trains');
-          const trains = response.data.filter(train => 
-            train.departure === args.departure && train.destination === args.destination
-          );
-
-          return { trains: JSON.stringify(trains) };
-        } catch (error) {
-          console.error("Error fetching trains:", error);
-          throw new Error("Service unavailable");
+          authenticate(headers);
+        } catch (err) {
+          return callback(err);
         }
+
+        console.log("📥 Incoming request for searchTrains:", args);
+
+        // Validate request arguments
+        if (!args.departure || !args.destination) {
+          return callback(new Error("⛔ Missing required parameters: departure or destination"));
+        }
+
+        console.log("🔎 Searching trains from:", args.departure, "to", args.destination);
+        // Dummy response
+        const response = { 
+          trains: {
+            train: [
+              { trainId: 101, departure: args.departure, destination: args.destination }
+            ]
+          }
+        };
+        callback(null, response);
       },
 
-      bookTrain: async function (args, headers) {
-        authenticate(headers);  // Check authentication
-
-        console.log("Booking train ID:", args.trainId, "for user:", args.userId);
-
+      bookTrain: function (args, callback, headers /* or soapHeader */) {
         try {
-          await axios.post('http://localhost:5000/trains/reserve', { trainId: args.trainId });
-
-          return { confirmation: `Booking confirmed for train ${args.trainId}` };
-        } catch (error) {
-          console.error("Error booking train:", error);
-          throw new Error("Booking failed");
+          // Enforce authentication first
+          authenticate(headers);
+        } catch (err) {
+          return callback(err); // Return an authentication error
         }
+
+        console.log("📥 Incoming request for bookTrain:", args);
+
+        // Validate request arguments
+        if (!args.trainId || !args.userId) {
+          return callback(new Error("⛔ Missing required parameters: trainId or userId"));
+        }
+
+        console.log("🛤️ Booking train ID:", args.trainId, "for user:", args.userId);
+        const response = { confirmation: `✅ Booking confirmed for train ${args.trainId}` };
+        callback(null, response);
       }
     }
   }
 };
 
-// Serve WSDL file
+// Provide the WSDL file at /wsdl
 app.use('/wsdl', (req, res) => {
   res.type('application/xml').send(wsdlXML);
 });
 
-// Start SOAP server
+// Start the server
 const server = app.listen(port, () => {
-  console.log(`🚀 SOAP Train Booking Service running on http://localhost:${port}/booking`);
+  console.log(`🚀 SOAP Service running at http://localhost:${port}/booking`);
 });
 
-soap.listen(server, '/booking', service, wsdlXML);
+// Attach the SOAP service to '/booking'
+soap.listen(server, '/booking', service, wsdlXML, () => {
+  console.log("📡 SOAP Service Ready on /booking");
+});
