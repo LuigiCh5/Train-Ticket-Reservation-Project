@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "departureStation": "Paris",
+        "arrivalStation": "Lyon",
+        "departureTime": "2025-02-01T08:00:00Z",
+        "arrivalTime": "2025-02-01T10:00:00Z",
+        "availableSeats": {
+            "firstClass": 10,
+            "businessClass": 20,
+            "standardClass": 98
+        }
+    },
+    {
+        "id": 2,
+        "departureStation": "Paris",
+        "arrivalStation": "Marseille",
+        "departureTime": "2025-02-01T09:00:00Z",
+        "arrivalTime": "2025-02-01T12:00:00Z",
+        "availableSeats": {
+            "firstClass": 5,
+            "businessClass": 15,
+            "standardClass": 80
+        }
+    }
+]
