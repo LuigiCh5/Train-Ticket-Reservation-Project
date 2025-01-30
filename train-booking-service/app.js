@@ -129,7 +129,7 @@ const service = {
 
           const resp = await axios.post('http://localhost:3000/api/trains/book', {
             trainId: parseInt(trainId, 10),
-            travelClass: travelClass || 'standard',
+            travelClass: travelClass || 'standardClass',
             tickets: tickets ? parseInt(tickets, 10) : 1
           });
           const soapResponse = {
@@ -148,8 +148,12 @@ const service = {
 
 
           if (fs.existsSync(reservationsFile)) {
-            const fileData = fs.readFileSync(reservationsFile, 'utf8');
-            reservations = JSON.parse(fileData);
+            try {
+              const fileData = fs.readFileSync(reservationsFile, 'utf8');
+              reservations = JSON.parse(fileData);
+            } catch (err) {
+              console.log("Le fichier reservations.json existant est vide !");
+            }
           }
 
 
@@ -158,7 +162,7 @@ const service = {
           fs.writeFileSync(reservationsFile, JSON.stringify(reservations, null, 2));
 
 
-        
+
           return callback(null, soapResponse);
 
         } catch (error) {
