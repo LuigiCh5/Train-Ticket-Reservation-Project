@@ -27,7 +27,19 @@ async function main() {
       },
     };
     client.addSoapHeader(soapHeader, '', 'tns', '');
-    console.log("✅ Connexion réussie !\n");
+    
+    // Test d’authentification rapide
+    const[test_auth] = await client.searchTrainsAsync({ 
+      departure: "Test", 
+      destination: "Test"
+    });
+
+    if(test_auth != null){
+      console.log("✅ Connexion réussie !\n");
+    } else {
+      console.error("❌ Authentification échouée !");
+      return;
+    }
 
     // 4) Recherche de trains
     console.log("=== 🚆 Recherche de trains ===\n");
