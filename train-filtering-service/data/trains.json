@@ -8,7 +8,7 @@
         "availableSeats": {
             "firstClass": 10,
             "businessClass": 20,
-            "standardClass": 100
+            "standardClass": 98
         }
     },
     {
