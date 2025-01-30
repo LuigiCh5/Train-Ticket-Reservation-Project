@@ -1,0 +1,65 @@
+<definitions name="TrainBookingService"
+  targetNamespace="http://example.com/trainbooking"
+  xmlns:tns="http://example.com/trainbooking"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <message name="searchTrainsRequest">
+    <part name="departure" type="xsd:string"/>
+    <part name="destination" type="xsd:string"/>
+  </message>
+
+  <message name="searchTrainsResponse">
+    <part name="trains" type="xsd:string"/>
+  </message>
+
+  <message name="bookTrainRequest">
+    <part name="trainId" type="xsd:int"/>
+    <part name="userId" type="xsd:string"/>
+  </message>
+
+  <message name="bookTrainResponse">
+    <part name="confirmation" type="xsd:string"/>
+  </message>
+
+  <portType name="TrainBookingPortType">
+    <operation name="searchTrains">
+      <input message="tns:searchTrainsRequest"/>
+      <output message="tns:searchTrainsResponse"/>
+    </operation>
+    <operation name="bookTrain">
+      <input message="tns:bookTrainRequest"/>
+      <output message="tns:bookTrainResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="TrainBookingBinding" type="tns:TrainBookingPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="searchTrains">
+      <soap:operation soapAction="http://example.com/trainbooking/searchTrains"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="bookTrain">
+      <soap:operation soapAction="http://example.com/trainbooking/bookTrain"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="TrainBookingService">
+    <port name="TrainBookingPort" binding="tns:TrainBookingBinding">
+      <soap:address location="http://localhost:4000/booking"/>
+    </port>
+  </service>
+
+</definitions>
