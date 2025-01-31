@@ -7,6 +7,10 @@
 - **CHEBIL Mohamed Nadhir**
 
 ---
+## Prérequis 
+```bash
+git clone https://github.com/LuigiCh5/Train-Ticket-Reservation-Project.git
+```
 
 ## 🎯 Objectifs
 Ce projet est une application web permettant :
