@@ -11,6 +11,7 @@
 ```bash
 git clone https://github.com/LuigiCh5/Train-Ticket-Reservation-Project.git
 ```
+Avoir 3 terminals différents pour service SOAP / REST et client (terminal 1 / terminal 2 / terminal 3)
 
 ## 🎯 Objectifs
 Ce projet est une application web permettant :
@@ -43,8 +44,10 @@ L'application est construite avec **Node.js** et utilise une base de données **
 ## 🚀 Installation et exécution du projet
 
 ### 🔹 1️⃣ Installation des dépendances
+**Terminal 1**
 Assure-toi d'avoir **Node.js** installé, puis installe les dépendances :
 ```bash
+cd train-booking-service
 npm install
 ```
 ### 🔹 2️⃣ Lancer le serveur
@@ -156,8 +159,10 @@ Train-Ticket-Reservation-Project/
 ## 🚀 Installation et exécution du projet
 
 ### 🔹 1️⃣ Installation des dépendances
+**Terminal 2**
 Assure-toi d'avoir **Node.js** installé, puis installe les dépendances :
 ```bash
+cd train-filtering-service
 npm install
 ```
 ### 🔹 2️⃣ Lancer le serveur
@@ -291,7 +296,7 @@ Train-Ticket-Reservation-Project/
 
 ---
 ## 🏗️ Client
-
+**Terminal 3**
 Assure-toi d'avoir **Node.js** installé, puis installe les dépendances :
 ```bash
 npm install
