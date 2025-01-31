@@ -5,24 +5,20 @@ const path = require('path');
 const router = express.Router();
 const DATA_FILE = path.join(__dirname, '../data/trains.json');
 
-// Fonction pour lire la base de données JSON
 const readData = () => {
     const data = fs.readFileSync(DATA_FILE);
     return JSON.parse(data);
 };
 
-// Fonction pour écrire dans la base de données JSON
 const writeData = (data) => {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 4));
 };
 
-// ✏️ Modifier le nombre de places disponibles pour un train donné
 router.patch('/update-seats/:trainId', (req, res) => {
     const { trainId } = req.params;
     const { travelClass, newSeats } = req.body;
     let trains = readData();
 
-    // Trouver l'index du train dans le fichier JSON
     const trainIndex = trains.findIndex(t => t.id === parseInt(trainId));
 
     if (trainIndex === -1) {
@@ -33,23 +29,24 @@ router.patch('/update-seats/:trainId', (req, res) => {
         return res.status(400).json({ message: 'Classe de voyage invalide' });
     }
 
-    // Mettre à jour le nombre de places
     trains[trainIndex].availableSeats[travelClass] = newSeats;
     writeData(trains);
 
     res.json({ message: 'Nombre de places mis à jour avec succès', train: trains[trainIndex] });
 });
 
-// 🔍 Recherche de trains disponibles
 router.get('/search', (req, res) => {
     const { departureStation, arrivalStation, departureDate, tickets, travelClass } = req.query;
     const trains = readData();
 
+    // Convert tickets to number (default = 1)
+    const ticketCount = parseInt(tickets, 10) || 1;
+
     const results = trains.filter(train =>
         train.departureStation === departureStation &&
         train.arrivalStation === arrivalStation &&
-        train.departureTime.startsWith(departureDate) &&
-        train.availableSeats[travelClass] >= tickets
+        (!departureDate || train.departureTime.startsWith(departureDate)) &&
+        train.availableSeats[travelClass] >= ticketCount
     );
 
     if (results.length === 0) {
@@ -59,7 +56,7 @@ router.get('/search', (req, res) => {
     res.json(results);
 });
 
-// 🎟️ Réservation de places
+
 router.post('/book', (req, res) => {
     const { trainId, travelClass, tickets } = req.body;
     let trains = readData();
@@ -73,7 +70,6 @@ router.post('/book', (req, res) => {
         return res.status(400).json({ message: 'Pas assez de places disponibles' });
     }
 
-    // Mise à jour des places disponibles
     trains[trainIndex].availableSeats[travelClass] -= tickets;
     writeData(trains);
 

@@ -6,9 +6,9 @@
         "departureTime": "2025-02-01T08:00:00Z",
         "arrivalTime": "2025-02-01T10:00:00Z",
         "availableSeats": {
-            "firstClass": 5,
-            "businessClass": 20,
-            "standardClass": 98
+            "firstClass": 10,
+            "businessClass": 11,
+            "standardClass": 91
         }
     },
     {
@@ -30,9 +30,9 @@
         "departureTime": "2025-02-02T06:00:00Z",
         "arrivalTime": "2025-02-02T08:00:00Z",
         "availableSeats": {
-            "firstClass": 10,
+            "firstClass": 9,
             "businessClass": 15,
-            "standardClass": 95
+            "standardClass": 90
         }
     },
     {
@@ -54,9 +54,9 @@
         "departureTime": "2025-03-10T11:15:00Z",
         "arrivalTime": "2025-03-10T13:15:00Z",
         "availableSeats": {
-            "firstClass": 12,
-            "businessClass": 8,
-            "standardClass": 120
+            "firstClass": 2,
+            "businessClass": 3,
+            "standardClass": 99
         }
     },
     {

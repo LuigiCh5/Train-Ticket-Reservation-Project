@@ -22,6 +22,24 @@
                 </xs:complexType>
             </xs:element>
 
+            <!-- ==================== authenticateUser Elements ==================== -->
+            <xs:element name="authenticateUserRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="username" type="xs:string"/>
+                        <xs:element name="password" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="authenticateUserResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="status" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
             <!-- ==================== searchTrains Elements ==================== -->
             <xs:element name="searchTrainsRequest">
                 <xs:complexType>
@@ -80,7 +98,16 @@
     </types>
 
     <!-- ========== MESSAGES ========== -->
-    <!-- Each operation has an input message and output message -->
+
+    <!-- authenticateUser messages -->
+    <message name="authenticateUserRequest">
+        <part name="parameters" element="tns:authenticateUserRequest"/>
+    </message>
+    <message name="authenticateUserResponse">
+        <part name="parameters" element="tns:authenticateUserResponse"/>
+    </message>
+
+    <!-- searchTrains messages -->
     <message name="searchTrainsRequest">
         <part name="parameters" element="tns:searchTrainsRequest"/>
     </message>
@@ -88,6 +115,7 @@
         <part name="parameters" element="tns:searchTrainsResponse"/>
     </message>
 
+    <!-- bookTrain messages -->
     <message name="bookTrainRequest">
         <part name="parameters" element="tns:bookTrainRequest"/>
     </message>
@@ -102,10 +130,18 @@
 
     <!-- ========== PORT TYPE ========== -->
     <portType name="TrainBookingPortType">
+
+        <!-- authenticateUser operation -->
+        <operation name="authenticateUser">
+            <input message="tns:authenticateUserRequest"/>
+            <output message="tns:authenticateUserResponse"/>
+        </operation>
+
         <operation name="searchTrains">
             <input message="tns:searchTrainsRequest"/>
             <output message="tns:searchTrainsResponse"/>
         </operation>
+
         <operation name="bookTrain">
             <input message="tns:bookTrainRequest"/>
             <output message="tns:bookTrainResponse"/>
@@ -115,11 +151,22 @@
     <!-- ========== BINDING ========== -->
     <binding name="TrainBookingBinding" type="tns:TrainBookingPortType">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        
+
+        <!-- authenticateUser -->
+        <operation name="authenticateUser">
+            <soap:operation soapAction="http://example.com/trainbooking/authenticateUser" style="document"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <!-- searchTrains -->
         <operation name="searchTrains">
             <soap:operation soapAction="http://example.com/trainbooking/searchTrains" style="document"/>
             <input>
-                <!-- The body is literal and we also expect the Auth header -->
                 <soap:body use="literal"/>
                 <soap:header message="tns:AuthenticationHeader" part="Auth" use="literal"/>
             </input>
@@ -128,10 +175,10 @@
             </output>
         </operation>
 
+        <!-- bookTrain -->
         <operation name="bookTrain">
             <soap:operation soapAction="http://example.com/trainbooking/bookTrain" style="document"/>
             <input>
-                <!-- The body is literal and we also expect the Auth header -->
                 <soap:body use="literal"/>
                 <soap:header message="tns:AuthenticationHeader" part="Auth" use="literal"/>
             </input>

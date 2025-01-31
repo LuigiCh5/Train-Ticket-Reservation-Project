@@ -1,0 +1,93 @@
+[
+  {
+    "trainId": 5,
+    "userId": "nadhir",
+    "travelClass": "standardClass",
+    "tickets": 10,
+    "bookedAt": "2025-01-30T18:35:20.001Z"
+  },
+  {
+    "trainId": 3,
+    "userId": "nadhir",
+    "travelClass": "standardClass",
+    "tickets": 5,
+    "bookedAt": "2025-01-30T18:36:57.205Z"
+  },
+  {
+    "trainId": 3,
+    "userId": "luigi",
+    "travelClass": "firstClass",
+    "tickets": 5,
+    "bookedAt": "2025-01-30T18:38:43.324Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "nadhir",
+    "travelClass": "firstClass",
+    "tickets": 1,
+    "bookedAt": "2025-01-30T19:01:05.582Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "nadhir",
+    "travelClass": "standardClass",
+    "tickets": 5,
+    "bookedAt": "2025-01-30T19:05:58.697Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "john",
+    "travelClass": "firstClass",
+    "tickets": 1,
+    "bookedAt": "2025-01-30T19:24:34.929Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "nadhir",
+    "travelClass": "2",
+    "tickets": 1,
+    "bookedAt": "2025-01-30T19:25:31.179Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "1",
+    "travelClass": "1",
+    "tickets": 1,
+    "bookedAt": "2025-01-30T19:26:36.137Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "nadhir",
+    "travelClass": "standardClass",
+    "tickets": 1,
+    "bookedAt": "2025-01-30T19:27:08.647Z"
+  },
+  {
+    "trainId": 1,
+    "userId": "luigi",
+    "travelClass": "standardClass",
+    "tickets": 1,
+    "bookedAt": "2025-01-30T19:34:11.498Z"
+  },
+  {
+    "trainId": 5,
+    "userId": "nadhir",
+    "travelClass": "firstClass",
+    "tickets": 5,
+    "bookedAt": "2025-01-30T19:56:43.629Z"
+  },
+  {
+    "trainId": 5,
+    "userId": "john",
+    "travelClass": "firstClass",
+    "tickets": 3,
+    "bookedAt": "2025-01-30T20:02:04.496Z"
+  },
+  {
+    "trainId": 3,
+    "userId": "nadhir",
+    "travelClass": "firstClass",
+    "tickets": 1,
+    "bookedAt": "2025-01-31T08:19:37.411Z"
+  }
+]

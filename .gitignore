@@ -1,2 +1,6 @@
+train-filtering-service/package-lock.json
+train-filtering-service/node_modules/
+train-booking-service/package-lock.json
+train-booking-service/node_modules/
 package-lock.json
 node_modules/

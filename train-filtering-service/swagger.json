@@ -1,0 +1,143 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Train Ticket Reservation API",
+      "version": "1.0.0",
+      "description": "API documentation for train searching and booking."
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000/api",
+        "description": "Local server"
+      }
+    ],
+    "paths": {
+      "/trains/search": {
+        "get": {
+          "summary": "Search for available trains",
+          "parameters": [
+            {
+              "name": "departureStation",
+              "in": "query",
+              "required": true,
+              "schema": { "type": "string" },
+              "description": "Departure station"
+            },
+            {
+              "name": "arrivalStation",
+              "in": "query",
+              "required": true,
+              "schema": { "type": "string" },
+              "description": "Arrival station"
+            },
+            {
+              "name": "departureDate",
+              "in": "query",
+              "schema": { "type": "string", "format": "date" },
+              "description": "Date of departure (optional)"
+            },
+            {
+              "name": "tickets",
+              "in": "query",
+              "schema": { "type": "integer", "default": 1 },
+              "description": "Number of tickets"
+            },
+            {
+              "name": "travelClass",
+              "in": "query",
+              "schema": { "type": "string", "enum": ["firstClass", "businessClass", "standardClass"] },
+              "description": "Class of travel"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of available trains",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Train"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No trains available"
+            }
+          }
+        }
+      },
+      "/trains/book": {
+        "post": {
+          "summary": "Book train tickets",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Booking confirmation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BookingResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Not enough seats available"
+            },
+            "404": {
+              "description": "Train not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Train": {
+          "type": "object",
+          "properties": {
+            "trainId": { "type": "integer" },
+            "departure": { "type": "string" },
+            "destination": { "type": "string" },
+            "departureTime": { "type": "string", "format": "date-time" },
+            "arrivalTime": { "type": "string", "format": "date-time" },
+            "availableTickets": {
+              "type": "object",
+              "properties": {
+                "firstClass": { "type": "integer" },
+                "businessClass": { "type": "integer" },
+                "standardClass": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "BookingRequest": {
+          "type": "object",
+          "properties": {
+            "trainId": { "type": "integer" },
+            "travelClass": { "type": "string", "enum": ["firstClass", "businessClass", "standardClass"] },
+            "tickets": { "type": "integer" }
+          }
+        },
+        "BookingResponse": {
+          "type": "object",
+          "properties": {
+            "confirmation": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+  

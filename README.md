@@ -18,7 +18,119 @@ Ce projet est une application web permettant :
 L'application est construite avec **Node.js** et utilise une base de données **JSON** locale au lieu de MongoDB pour stocker les informations des trains.
 
 ---
+## 🏗️ Train Booking Service (SOAP)
 
+### 🔹 Fonctionnalités
+✅ Recherche de trains disponibles  
+✅ Réservation de billets avec mise à jour automatique des places restantes  
+✅ Authentication
+✅ Stockage des données de réservation.
+
+---
+
+## 🛠️ Technologies utilisées
+- **Node.js** : Serveur backend
+- **Express.js** : Framework pour l'API REST
+- **JSON** : Stockage des données des trains
+- **Postman / cURL** : Test des requêtes API
+
+---
+
+## 🚀 Installation et exécution du projet
+
+### 🔹 1️⃣ Installation des dépendances
+Assure-toi d'avoir **Node.js** installé, puis installe les dépendances :
+```bash
+npm install
+```
+### 🔹 2️⃣ Lancer le serveur
+```bash
+node app.js
+```
+Le serveur démarre sur http://localhost:4000/booking.
+
+---
+
+## 🔍 Endpoints de l'API
+
+### 1️⃣ 📌 Rechercher des trains disponibles
+```
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:tns="http://example.com/trainbooking">
+    <soap:Header>
+        <tns:Authentication>
+            <username>admin</username>
+            <password>password123</password>
+        </tns:Authentication>
+    </soap:Header>
+    <soap:Body>
+        <tns:searchTrainsRequest>
+            <departure>Paris</departure>
+            <destination>Lyon</destination>
+            <travelClass>standardClass</travelClass>
+            <tickets>2</tickets>
+            <departureDate>2025-02-01</departureDate>
+        </tns:searchTrainsRequest>
+    </soap:Body>
+</soap:Envelope>
+```
+
+### 2️⃣ 🎟️ Réserver un billet
+ ```<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:tns="http://example.com/trainbooking">
+    <soap:Header>
+        <tns:Authentication>
+            <username>admin</username>
+            <password>password123</password>
+        </tns:Authentication>
+    </soap:Header>
+    <soap:Body>
+        <tns:bookTrainRequest>
+            <trainId>1</trainId>
+            <userId>nadhir</userId>
+            <travelClass>standardClass</travelClass>
+            <tickets>2</tickets>
+        </tns:bookTrainRequest>
+    </soap:Body>
+</soap:Envelope>
+```
+### 3️⃣ ✏️ Authentication
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:tns="http://example.com/trainbooking">
+    <soap:Header>
+        <tns:Authentication>
+            <username>admin</username>
+            <password>password123</password>
+        </tns:Authentication>
+    </soap:Header>
+    <soap:Body>
+        <tns:authenticateUserRequest>
+            <username>admin</username>
+            <password>password123</password>
+        </tns:authenticateUserRequest>
+    </soap:Body>
+</soap:Envelope>``` 
+
+```
+
+---
+
+## 📂 Structure du service A(SOAP) 
+```graphql
+Train-Ticket-Reservation-Project/
+├── train-filtering-service/
+│   ├── data/
+│   │   └── reservations.json          # Base de données de reservations JSON
+│   ├── app.js                   # Point d'entrée du serveur
+│   ├── package.json             # Fichier de configuration du projet
+│   ├── wsdl/
+│   │   └── trainBooking.wsdl  
+                   
+```
+
+---
 ## 🏗️ Train Filtering Service (REST)
 
 ### 🔹 Fonctionnalités
@@ -160,7 +272,7 @@ curl -X PATCH "http://localhost:3000/api/trains/update-seats/1" \
 
 ---
 
-## 📂 Structure du projet
+## 📂 Structure du service B (REST)
 ```graphql
 Train-Ticket-Reservation-Project/
 ├── train-filtering-service/
@@ -174,14 +286,27 @@ Train-Ticket-Reservation-Project/
 ```
 
 ---
+## 🏗️ Client
 
+Assure-toi d'avoir **Node.js** installé, puis installe les dépendances :
+```bash
+npm install
+```
+### 🔹 2️⃣ Lancer le Client 
+```bash
+node client.js
+```
+
+Pour se connecter il faut utilser l'un de ces comptes
+{
+    "admin","password123"
+    ou
+    "user1","securepass"
+}
+
+
+---
 ## 📜 Licence
 Ce projet est open-source et peut être utilisé librement.
 
 ---
-
-### **💡 Ce que ce README.md apporte :**
-✅ Un **aperçu rapide** du projet  
-✅ Des **instructions d'installation et d'utilisation** claires  
-✅ Une **documentation API détaillée** avec des exemples  
-✅ Une **organisation propre** du projet  
